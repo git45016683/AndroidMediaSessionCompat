@@ -15,8 +15,8 @@ import android.util.Log;
 
 import java.util.List;
 
-//public class BackgroundAudioService  {
-public class BackgroundAudioService extends MediaBrowserServiceCompat  {
+public class BackgroundAudioService  {
+//public class BackgroundAudioService extends MediaBrowserServiceCompat  {
     public static final String TAG = "BackgroundAudioService";
 
     private MediaSessionCompat mMediaSessionCompat;
@@ -40,11 +40,11 @@ public class BackgroundAudioService extends MediaBrowserServiceCompat  {
         }
     };
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        initMediaSession();
-    }
+//    @Override
+//    public void onCreate() {
+//        super.onCreate();
+//        initMediaSession();
+//    }
 
     private Application app = null;
     public void initApp(Application app) {
@@ -52,11 +52,11 @@ public class BackgroundAudioService extends MediaBrowserServiceCompat  {
         initMediaSession();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mMediaSessionCompat.release();
-    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        mMediaSessionCompat.release();
+//    }
 
     public void initMediaSession() {
 //        ComponentName mediaButtonReceiver = new ComponentName(getApplicationContext(), MediaButtonReceiver.class);
@@ -75,20 +75,20 @@ public class BackgroundAudioService extends MediaBrowserServiceCompat  {
 //        setSessionToken(mMediaSessionCompat.getSessionToken());
     }
 
-    //Not important for general audio service, required for class
-    @Nullable
-    @Override
-    public BrowserRoot onGetRoot(@NonNull String clientPackageName, int clientUid, @Nullable Bundle rootHints) {
-        if(TextUtils.equals(clientPackageName, getPackageName())) {
-            return new BrowserRoot(getString(R.string.app_name), null);
-        }
-
-        return null;
-    }
-
-    //Not important for general audio service, required for class
-    @Override
-    public void onLoadChildren(@NonNull String parentId, @NonNull Result<List<MediaBrowserCompat.MediaItem>> result) {
-//        result.sendResult(null);
-    }
+//    //Not important for general audio service, required for class
+//    @Nullable
+//    @Override
+//    public BrowserRoot onGetRoot(@NonNull String clientPackageName, int clientUid, @Nullable Bundle rootHints) {
+//        if(TextUtils.equals(clientPackageName, getPackageName())) {
+//            return new BrowserRoot(getString(R.string.app_name), null);
+//        }
+//
+//        return null;
+//    }
+//
+//    //Not important for general audio service, required for class
+//    @Override
+//    public void onLoadChildren(@NonNull String parentId, @NonNull Result<List<MediaBrowserCompat.MediaItem>> result) {
+////        result.sendResult(null);
+//    }
 }
