@@ -22,44 +22,43 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mPlayPauseToggleButton;
 
-    private MediaBrowserCompat.ConnectionCallback mMediaBrowserCompatConnectionCallback = new MediaBrowserCompat.ConnectionCallback() {
-
-        @Override
-        public void onConnected() {
-            super.onConnected();
-            try {
-                mMediaControllerCompat = new MediaControllerCompat(MainActivity.this, mMediaBrowserCompat.getSessionToken());
-                mMediaControllerCompat.registerCallback(mMediaControllerCompatCallback);
-                setSupportMediaController(mMediaControllerCompat);
-                getSupportMediaController().getTransportControls().playFromMediaId(String.valueOf(R.raw.warner_tautz_off_broadway), null);
-
-            } catch( RemoteException e ) {
-
-            }
-        }
-    };
-
-    private MediaControllerCompat.Callback mMediaControllerCompatCallback = new MediaControllerCompat.Callback() {
-
-        @Override
-        public void onPlaybackStateChanged(PlaybackStateCompat state) {
-            super.onPlaybackStateChanged(state);
-            if( state == null ) {
-                return;
-            }
-
-            switch( state.getState() ) {
-                case PlaybackStateCompat.STATE_PLAYING: {
-                    mCurrentState = STATE_PLAYING;
-                    break;
-                }
-                case PlaybackStateCompat.STATE_PAUSED: {
-                    mCurrentState = STATE_PAUSED;
-                    break;
-                }
-            }
-        }
-    };
+//    private MediaBrowserCompat.ConnectionCallback mMediaBrowserCompatConnectionCallback = new MediaBrowserCompat.ConnectionCallback() {
+//
+//        @Override
+//        public void onConnected() {
+//            super.onConnected();
+//            try {
+//                mMediaControllerCompat = new MediaControllerCompat(MainActivity.this, mMediaBrowserCompat.getSessionToken());
+//                mMediaControllerCompat.registerCallback(mMediaControllerCompatCallback);
+//                setSupportMediaController(mMediaControllerCompat);
+//                getSupportMediaController().getTransportControls().playFromMediaId(String.valueOf(R.raw.warner_tautz_off_broadway), null);
+//
+//            } catch( RemoteException e ) {
+//
+//            }
+//        }
+//    };
+//    private MediaControllerCompat.Callback mMediaControllerCompatCallback = new MediaControllerCompat.Callback() {
+//
+//        @Override
+//        public void onPlaybackStateChanged(PlaybackStateCompat state) {
+//            super.onPlaybackStateChanged(state);
+//            if( state == null ) {
+//                return;
+//            }
+//
+//            switch( state.getState() ) {
+//                case PlaybackStateCompat.STATE_PLAYING: {
+//                    mCurrentState = STATE_PLAYING;
+//                    break;
+//                }
+//                case PlaybackStateCompat.STATE_PAUSED: {
+//                    mCurrentState = STATE_PAUSED;
+//                    break;
+//                }
+//            }
+//        }
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +67,12 @@ public class MainActivity extends AppCompatActivity {
 
         mPlayPauseToggleButton = (Button) findViewById(R.id.button);
 
-        mMediaBrowserCompat = new MediaBrowserCompat(this, new ComponentName(this, BackgroundAudioService.class),
-                mMediaBrowserCompatConnectionCallback, getIntent().getExtras());
-
-        mMediaBrowserCompat.connect();
+        BackgroundAudioService backgroundAudioService = new BackgroundAudioService();
+        backgroundAudioService.initApp(getApplication());
+//        mMediaBrowserCompat = new MediaBrowserCompat(this, new ComponentName(this, BackgroundAudioService.class),
+//                mMediaBrowserCompatConnectionCallback, getIntent().getExtras());
+//
+//        mMediaBrowserCompat.connect();
 
         mPlayPauseToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +99,6 @@ public class MainActivity extends AppCompatActivity {
             getSupportMediaController().getTransportControls().pause();
         }
 
-        mMediaBrowserCompat.disconnect();
+//        mMediaBrowserCompat.disconnect();
     }
 }

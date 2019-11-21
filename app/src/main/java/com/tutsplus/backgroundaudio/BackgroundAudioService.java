@@ -1,5 +1,6 @@
 package com.tutsplus.backgroundaudio;
 
+import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,15 +46,23 @@ public class BackgroundAudioService extends MediaBrowserServiceCompat  {
         initMediaSession();
     }
 
+    private Application app = null;
+    public void initApp(Application app) {
+        this.app = app;
+        initMediaSession();
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         mMediaSessionCompat.release();
     }
 
-    private void initMediaSession() {
-        ComponentName mediaButtonReceiver = new ComponentName(getApplicationContext(), MediaButtonReceiver.class);
-        mMediaSessionCompat = new MediaSessionCompat(getApplicationContext(), "Tag", mediaButtonReceiver, null);
+    public void initMediaSession() {
+//        ComponentName mediaButtonReceiver = new ComponentName(getApplicationContext(), MediaButtonReceiver.class);
+        ComponentName mediaButtonReceiver = new ComponentName(app, MediaButtonReceiver.class);
+//        mMediaSessionCompat = new MediaSessionCompat(getApplicatigetApplicationContext(), MediaButtonReceiver.class);
+        mMediaSessionCompat = new MediaSessionCompat(app, "Tag", mediaButtonReceiver, null);
 
         mMediaSessionCompat.setCallback(mMediaSessionCallback);
         mMediaSessionCompat.setFlags( MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS );
